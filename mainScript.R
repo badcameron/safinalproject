@@ -38,7 +38,7 @@ data$Name <- ifelse(
     grepl("Jr\\.$", data$Name),
     trimws(sub("Jr\\.$", "", data$Name)),
     data$Name
-  )x
+  )
 )
 
 
@@ -61,5 +61,8 @@ data_processed <- final_merged_data %>%
   ) %>%
   # Remove rows where we don't have next season's data
   filter(!is.na(wRCplus_change))
+
+
+
 
 
