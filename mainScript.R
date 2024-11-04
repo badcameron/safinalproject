@@ -12,12 +12,13 @@ data <- data %>%
                                 str_split(`last_name, first_name`, ", ", simplify = TRUE)[,1], sep = " ")) %>% 
   select(-`last_name, first_name`)
 
-data24 <- fread("baseball data - 2024.csv")
-data23 <- fread("baseball data - 2023.csv")
-data22 <- fread("baseball data - 2022.csv")
-data21 <- fread("baseball data - 2021.csv")
+#Data for MLB seasons 2021-2024 (only on qualified hitters)
+data24 <- baseball_data_2024
+data23 <- baseball_data_2023
+data22 <- baseball_data_2022
+data21 <- baseball_data_2021
 
-# Create vector of protected names from last two images
+#Create vector of protected names from last two images
 protected_names <- c(
   "Bobby Witt Jr.",
   "Vladimir Guerrero Jr.",
@@ -30,7 +31,7 @@ protected_names <- c(
   "LaMonte Wade Jr."
 )
 
-# Process names in the data table
+#Process names in the data table
 data$Name <- ifelse(
   data$Name %in% protected_names,
   data$Name,
@@ -41,7 +42,7 @@ data$Name <- ifelse(
   )
 )
 
-
+#Merge data21-data24 to get a new and better version of data 
 merged_data <- rbindlist(list(data24, data23, data22, data21), use.names = TRUE, fill = TRUE)
 
 final_merged_data <- merge(merged_data, data, by = c("Name", "year"), all = TRUE) %>% 
